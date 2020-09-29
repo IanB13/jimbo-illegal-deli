@@ -3,6 +3,10 @@ const app = express();
 const customerRouter = require('./controllers/customers')
 const inventoryRouter = require('./controllers/inventory')
 const testingRouter = require('./controllers/testing')
+const orderSort = require('./services/orderSort')
+
+const cron = require('node-cron');
+cron.schedule('* * 15 * *', orderSort); //For 3pm
 
 //mongoose config
 const mongoose = require('mongoose');
