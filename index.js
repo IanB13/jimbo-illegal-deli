@@ -1,9 +1,7 @@
-// Import express
-let express = require('express')
-// Initialize the app
-let app = express();
+// Import the app
+const app = require('./app')
 // Setup server port
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 // Send message for default URL
 app.get('/', (req, res) => res.send('Hello World'));
 // Launch app to listen to specified port
