@@ -6,7 +6,7 @@ const testingRouter = require('./controllers/testing')
 const orderSort = require('./services/orderSort')
 
 const cron = require('node-cron');
-cron.schedule('* * 15 * *', orderSort); //For 3pm
+cron.schedule('0 1 * * 3', orderSort); //For 1:00 am every Wednesday
 
 //mongoose config
 const mongoose = require('mongoose');
