@@ -7,6 +7,13 @@ inventoryRouter.get('/', async (_request, response) => {
     response.status(200).json(inventory)
  })
 
+ //TODO: better input handling
+inventoryRouter.post('/',  async (request, response) => {
+    const item = request.body
+    console.log(item)
+    await Inventory.create(item)
+    response.json(item)
+ })
 
 module.exports = inventoryRouter
 

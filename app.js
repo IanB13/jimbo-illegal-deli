@@ -19,7 +19,7 @@ mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology: true  }).then(
   console.log(error)
 })
 
-
+app.use(express.json())
 app.use('/customers',customerRouter)
 app.use('/inventory',inventoryRouter)
 app.use('/testing',testingRouter)
