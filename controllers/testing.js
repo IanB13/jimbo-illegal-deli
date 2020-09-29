@@ -11,7 +11,7 @@ testingRouter.get('/reset', async (_request, response) => {
     await Inventory.insertMany(invJSON)
     await Customer.deleteMany({})
     await Customer.insertMany(custJSON)
-    response.status(200).json({"hi":"world"})
+    response.status(200).send("reset database")
  })
 
 
