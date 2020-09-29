@@ -1,7 +1,15 @@
 const inventoryRouter = require(`express`).Router();
 const Inventory = require('../models/Inventory')
+const updateCurrency = require('../services/updateCurrency')
 
-//gets all customers and returns a list
+//TODO: make put
+inventoryRouter.get('/currency', async (request, response) => {
+    console.log(request.query)
+    const status = updateCurrency(request.query)
+    response.status(200).send("WIP")
+ })
+
+//gets all inventory and returns a list
 inventoryRouter.get('/', async (_request, response) => {
     const inventory =  await Inventory.find({})
     response.status(200).json(inventory)
@@ -14,6 +22,9 @@ inventoryRouter.post('/',  async (request, response) => {
     await Inventory.create(item)
     response.json(item)
  })
+
+//updates currency data
+
 
 module.exports = inventoryRouter
 
