@@ -1,5 +1,6 @@
-const customerRouter = require(`express`).Router();
+const customerRouter = require(`express`).Router()
 const Customer = require('../models/Customer')
+const custJSON = require('../deli_customers.json')
 
 //gets all customers and returns a list
 customerRouter.get('/', async (_request, response) => {
@@ -7,9 +8,10 @@ customerRouter.get('/', async (_request, response) => {
     response.status(200).json(cutomers)
  })
 
- //finds customers by MongoId provided ID
- //Chose to do this because easier, more stable to add, delete update
- //also eaiest way to not get duplicate IDs
+/*finds customers by MongoId provided ID
+ Chose to do this because easier, more stable to add, delete update
+ also no duplicate IDs, more performant */
+//TODO: no ID return!!
 customerRouter.get('/:id',async (request, response) => {
     console.log(request.params.id)
     const id = request.params.id
