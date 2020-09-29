@@ -14,7 +14,8 @@ const inventorySchema = new mongoose.Schema({
     country: String,
     country_code: String,
     currency: String,
-    original_price: String, // must be added
+    base_price: String, // must be added
+    base_currency_code: String,
     contact: {
       phone: String,
       email: String

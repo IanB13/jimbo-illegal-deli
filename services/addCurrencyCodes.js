@@ -1,7 +1,7 @@
 const axios = require('axios')
 
 //utilises  https://restcountries.eu/rest/v2 to create
-//currency_code and original_price for inventory objects
+//currency_code and base_price, base_currency_code for inventory objects
 
 const addCurrencyCodes = async (inventory) =>{
   //creates dictonary of elements to reduce redundant api calls
@@ -9,7 +9,8 @@ const addCurrencyCodes = async (inventory) =>{
   //updates inventory with new data
   const updatedInventory = inventory.map(inv =>{
     inv.details.currency_code = dict[inv.supplier_details.country_code]
-    inv.supplier_details.original_price = inv.details.price
+    inv.supplier_details.base_price = inv.details.price
+    inv.supplier_details.base_currency_code = dict[inv.supplier_details.country_code]
     return inv
   })
   console.log(updatedInventory)
