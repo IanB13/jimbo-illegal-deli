@@ -5,8 +5,8 @@ const updateCurrency = require('../services/updateCurrency')
 //TODO: make put
 inventoryRouter.get('/currency', async (request, response) => {
     console.log(request.query)
-    const status = updateCurrency(request.query)
-    response.status(200).send("WIP")
+    const status = await updateCurrency(request.query)
+    response.status(200).json(status)
  })
 
 //gets all inventory and returns a list

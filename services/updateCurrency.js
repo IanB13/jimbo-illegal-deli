@@ -9,60 +9,54 @@ require('dotenv').config();
 const axios = require('axios');
 const { ObjectID } = require('mongodb');
 
-//TODO: RENAME, finish update all version
 //TODO: fix naming and add better comments
-const updateCurrency = async ({  code: newCurrencyCode, id, itemName }) => {
-    console.log({ newCurrencyCode, id, itemName })
-    //TODO: CHECK IF VALID
-    //code must exist, id or name but not both
-    const updateArray = []
+//TODO: CHECK IF VALID
+//code must exist, id or name but not both
+const updateCurrency = async (queryReq) => {
+    const updateArray = await getUpdateArray(queryReq)
+    const { code: newCurrencyCode,} = queryReq
     
-    if(itemName || id ){
-       let updateObject = undefined
-        if(itemName){
-            const findObj = {item: itemName}
-            const awitingObjext = await Inventory.find(findObj)
-            updateObject = awitingObjext[0]
-        }
-        else{
-            const mongoID = ObjectID(id)
-            try{
-            updateObject = await Inventory.findById(mongoID)
-            }
-            catch{
-                console.log('here')
-            }
-        }
-
-        console.log(updateObject)
-        const baseCurrencyCode = updateObject.supplier_details.base_currency_code
-        console.log("base currency code is",baseCurrencyCode)
-       
-        const rates = await getRates()
-        console.log(newCurrencyCode)
-        console.log("new rate is" , rates[newCurrencyCode])
+    const rates = await getRates()
+    const returnArray = []
+    for(obj of updateArray){
+        const baseCurrencyCode = obj.supplier_details.base_currency_code
         const newRate = rates[newCurrencyCode]
         const oldRate = rates[baseCurrencyCode]
-        const newPrice = updateObject.supplier_details.base_price * (newRate/oldRate)
-        updateObject.details.currency_code = newCurrencyCode
-        updateObject.details.price = newPrice
-        console.log(newPrice,newCurrencyCode)
-        
+        const newPrice = obj.supplier_details.base_price * (newRate/oldRate)
+        obj.details.currency_code = newCurrencyCode
+        obj.details.price = Math.round(newPrice*100)/100
         await Inventory.updateOne(
-            { _id: ObjectID(updateObject._id) },
-            updateObject
+            { _id: ObjectID(obj._id) },
+            obj
         )
-    }
-    else{
-
-    
-
-
-    }
+        returnArray.push(obj)
+    } 
+    return returnArray
 }
 
 
+const getUpdateArray = async (queryReq) =>{
+    const {  code: newCurrencyCode, id, itemName } = queryReq
+    console.log({ newCurrencyCode, id, itemName })
+    let updateArray = []
+    if(itemName || id ){
+        if(itemName){
+            const findObj = {item: itemName}
+            const invObj = await Inventory.find(findObj)
+            updateArray.push(invObj[0])
+        }
+        else{
+            const mongoID = ObjectID(id)
+            invObj = await Inventory.findById(mongoID)
+            updateArray.push(invObj)
+        }
+    }
+    else{
+        updateArray = await Inventory.find({})
+    }
 
+    return updateArray
+}
 
 
 const getRates = async () =>{
