@@ -1,4 +1,4 @@
-const findCurrencyCode = require("../services/currencyAPI")
+const findCurrencyCode = require("../services/countryAPI")
 
 //utilises  https://restcountries.eu/rest/v2 to create
 //currency_code and base_price, base_currency_code for inventory objects
@@ -13,12 +13,11 @@ const addCurrencyCodes = async (inventory) => {
         inv.supplier_details.base_currency_code = dict[inv.supplier_details.country_code]
         return inv
     })
-    console.log(updatedInventory)
     return updatedInventory
 }
 
 
-//creates a unique list of counrty codes
+//creates a unique list of counrty codes from inventory items
 const getCountryCodes = (inventory) => {
     const countryCodes = inventory.map(inv => inv.supplier_details.country_code)
     const countrySet = new Set(countryCodes)
@@ -26,17 +25,13 @@ const getCountryCodes = (inventory) => {
     return countryCodesList
 }
 
+// creates a dictonary mapping country codes to their most used currency code
 const createCountryCurrencyDict = async (inventory) => {
     const countryCodes = getCountryCodes(inventory)
-
+    console.log(countryCodes)
     const countryCurrencyArray = await Promise.all( countryCodes.map( async countryCode => {
-        try{
-            const currencyCode = await findCurrencyCode(countryCode)
-            return({ countryCode,currencyCode })
-        }
-        catch{
-            console.error("HELLO ERROR")
-        }
+        const currencyCode = await findCurrencyCode(countryCode)
+        return({ countryCode,currencyCode })
     }))
 
     const countryDictonary = {}

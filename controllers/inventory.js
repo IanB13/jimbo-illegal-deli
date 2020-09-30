@@ -2,6 +2,7 @@ const inventoryRouter = require("express").Router()
 const Inventory = require("../models/Inventory")
 const updateCurrency = require("../utils/updateCurrency")
 const orderProcessing = require("../utils/order")
+const createInvItem = require("../utils/createInvItem")
 
 //updates orders
 inventoryRouter.put("/order", async (request,response) => {
@@ -20,12 +21,10 @@ inventoryRouter.put("/currency", async (request, response) => {
     response.status(200).json(status)
 })
 
-//TODO: better input handling
-inventoryRouter.post("/add",  async (request, response) => {
-    const item = request.body
-    console.log(item)
-    await Inventory.create(item)
-    response.json(item)
+//adds inventory item
+inventoryRouter.post("/",  async (request, response) => {
+    const status = await createInvItem(request.body)
+    response.status(200).json(status)
 })
 
 //gets all inventory and returns a list
