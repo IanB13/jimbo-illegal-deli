@@ -2,7 +2,7 @@ const customerRouter = require("express").Router()
 const Customer = require("../models/Customer")
 const distance = require("../utils/distance")
 
-//TODO: does nothing
+//TODO: does nothing, use google maps to make bike data
 customerRouter.get("/distance/bike", async (request, response) => {
     console.log(request.query)
     response.status(200).send("hello bike")

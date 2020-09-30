@@ -28,7 +28,6 @@ const getCountryCodes = (inventory) => {
 // creates a dictonary mapping country codes to their most used currency code
 const createCountryCurrencyDict = async (inventory) => {
     const countryCodes = getCountryCodes(inventory)
-    console.log(countryCodes)
     const countryCurrencyArray = await Promise.all( countryCodes.map( async countryCode => {
         const currencyCode = await findCurrencyCode(countryCode)
         return({ countryCode,currencyCode })
