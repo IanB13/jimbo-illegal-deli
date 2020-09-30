@@ -3,7 +3,7 @@ const Customer = require("../models/Customer")
 const Inventory = require("../models/Inventory")
 const custJSON = require("../deli_customers.json")
 const invJSON = require("../inventory.json")
-const addCurrencyCodes = require("../services/addCurrencyCodes")
+const addCurrencyCodes = require("../utils/addCurrencyCodes")
 
 //TODO:MAYBE: figure out how to run concurently, promise.all?
 //TODO: Status code

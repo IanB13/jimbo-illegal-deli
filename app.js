@@ -3,7 +3,7 @@ const app = express()
 const customerRouter = require("./controllers/customers")
 const inventoryRouter = require("./controllers/inventory")
 const testingRouter = require("./controllers/testing")
-const orderSort = require("./services/orderSort")
+const orderSort = require("./utils/orderSort")
 
 const cron = require("node-cron")
 cron.schedule("0 1 * * 3", orderSort) //For 1:00 am every Wednesday

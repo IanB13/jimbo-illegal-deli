@@ -1,7 +1,7 @@
 const inventoryRouter = require("express").Router()
 const Inventory = require("../models/Inventory")
-const updateCurrency = require("../services/updateCurrency")
-const orderProcessing = require("../services/order")
+const updateCurrency = require("../utils/updateCurrency")
+const orderProcessing = require("../utils/order")
 
 //updates orders
 inventoryRouter.put("/order", async (request,response) => {

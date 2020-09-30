@@ -1,6 +1,6 @@
 const customerRouter = require("express").Router()
 const Customer = require("../models/Customer")
-const distance = require("../services/distance")
+const distance = require("../utils/distance")
 
 //TODO: does nothing
 customerRouter.get("/distance/bike", async (request, response) => {
