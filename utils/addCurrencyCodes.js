@@ -1,4 +1,4 @@
-const axios = require("axios")
+const findCurrencyCode = require("../services/currencyAPI")
 
 //utilises  https://restcountries.eu/rest/v2 to create
 //currency_code and base_price, base_currency_code for inventory objects
@@ -17,13 +17,6 @@ const addCurrencyCodes = async (inventory) => {
     return updatedInventory
 }
 
-
-//TODO: add error code
-//maybe refactor axios stuff into seperate module
-const findCurrencyCode = async (countryCode) => {
-    const response = await axios.get(`https://restcountries.eu/rest/v2/alpha/${countryCode}`)
-    return response.data.currencies[0].code //first in array is most common currency
-}
 
 //creates a unique list of counrty codes
 const getCountryCodes = (inventory) => {
