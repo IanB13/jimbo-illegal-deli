@@ -1,10 +1,18 @@
 const customerRouter = require(`express`).Router()
 const Customer = require('../models/Customer')
+const distance = require('../services/distance')
 
-//gets all customers and returns a list
-customerRouter.get('/', async (_request, response) => {
-    const cutomers =  await Customer.find({})
-    response.status(200).json(cutomers)
+//TODO: does nothing
+customerRouter.get('/distance/bike', async (request, response) => {
+    console.log(request.query)
+    response.status(200).send("hello bike")
+ })
+
+//calculates distance via helicopter
+customerRouter.get('/distance/helicopter', async (request, response) => {
+    console.log(request.query)
+    const helicopterDist = await distance.helicopter(request.query)
+    response.status(200).json(helicopterDist)
  })
 
 /*finds customers by MongoId provided ID
@@ -21,5 +29,11 @@ customerRouter.get('/:id',async (request, response) => {
         response.status(404).send(`Customer with id ${id} not found`)
     }
 })
+
+//gets all customers and returns a list
+customerRouter.get('/', async (_request, response) => {
+    const cutomers =  await Customer.find({})
+    response.status(200).json(cutomers)
+ })
 
 module.exports = customerRouter
