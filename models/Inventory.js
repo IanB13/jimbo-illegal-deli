@@ -3,9 +3,9 @@ const mongoose = require("mongoose")
 const inventorySchema = new mongoose.Schema({
     item: String,
     details: {
-        price: String,
-        currency_code: String, // must be added
-        amount: String,
+        price: Number,
+        currency_code: String, //TODO: must be added
+        amount: Number,
         last_purchased: Date,
         color: String,
         color_hex: String
@@ -14,8 +14,8 @@ const inventorySchema = new mongoose.Schema({
         country: String,
         country_code: String,
         currency: String,
-        base_price: String, // must be added
-        base_currency_code: String,
+        base_price: Number, // must be added
+        base_currency_code: String, // must be added
         contact: {
             phone: String,
             email: String
