@@ -1,30 +1,30 @@
-const express = require("express");
-const app = express();
-const customerRouter = require('./controllers/customers')
-const inventoryRouter = require('./controllers/inventory')
-const testingRouter = require('./controllers/testing')
-const orderSort = require('./services/orderSort')
+const express = require("express")
+const app = express()
+const customerRouter = require("./controllers/customers")
+const inventoryRouter = require("./controllers/inventory")
+const testingRouter = require("./controllers/testing")
+const orderSort = require("./services/orderSort")
 
-const cron = require('node-cron');
-cron.schedule('0 1 * * 3', orderSort); //For 1:00 am every Wednesday
+const cron = require("node-cron")
+cron.schedule("0 1 * * 3", orderSort) //For 1:00 am every Wednesday
 
 //mongoose config
-const mongoose = require('mongoose');
-require('dotenv').config();
-let uri = process.env.MONGODB_URI;
-if (process.env.NODE_ENV === 'test') {
-  uri = process.env.TEST_MONGODB_URI
+const mongoose = require("mongoose")
+require("dotenv").config()
+let uri = process.env.MONGODB_URI
+if (process.env.NODE_ENV === "test") {
+    uri = process.env.TEST_MONGODB_URI
 }
-mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology: true  }).then(success =>{
-  console.log(`connected at ${uri}`)
+mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology: true  }).then(() => {
+    console.log(`connected at ${uri}`)
 }
-).catch( error =>{
-  console.log(error)
+).catch( error => {
+    console.log(error)
 })
 
 app.use(express.json())
-app.use('/customers',customerRouter)
-app.use('/inventory',inventoryRouter)
-app.use('/testing',testingRouter)
+app.use("/customers",customerRouter)
+app.use("/inventory",inventoryRouter)
+app.use("/testing",testingRouter)
 
 module.exports = app

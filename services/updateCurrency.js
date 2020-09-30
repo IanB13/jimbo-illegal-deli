@@ -1,24 +1,24 @@
-/* updates inventory currency 
+/* updates inventory currency
 code is needed, and is the currency code
-id and name are optional, but only one can be provided 
+id and name are optional, but only one can be provided
 if an id or name id provided only the inventory item matching will be updated
 otherwise all items will be updated
 */
-const Inventory = require('../models/Inventory')
-require('dotenv').config();
-const axios = require('axios');
-const { ObjectID } = require('mongodb');
+const Inventory = require("../models/Inventory")
+require("dotenv").config()
+const axios = require("axios")
+const { ObjectID } = require("mongodb")
 
 //TODO: fix naming and add better comments
 //TODO: CHECK IF VALID
 //code must exist, id or name but not both
 const updateCurrency = async (queryReq) => {
     const updateArray = await getUpdateArray(queryReq)
-    const { code: newCurrencyCode,} = queryReq
-    
+    const { code: newCurrencyCode, } = queryReq
+
     const rates = await getRates()
     const returnArray = []
-    for(obj of updateArray){
+    for(const obj of updateArray){
         const baseCurrencyCode = obj.supplier_details.base_currency_code
         const newRate = rates[newCurrencyCode]
         const oldRate = rates[baseCurrencyCode]
@@ -30,24 +30,24 @@ const updateCurrency = async (queryReq) => {
             obj
         )
         returnArray.push(obj)
-    } 
+    }
     return returnArray
 }
 
 
-const getUpdateArray = async (queryReq) =>{
+const getUpdateArray = async (queryReq) => {
     const {  code: newCurrencyCode, id, itemName } = queryReq
     console.log({ newCurrencyCode, id, itemName })
     let updateArray = []
     if(itemName || id ){
         if(itemName){
-            const findObj = {item: itemName}
+            const findObj = { item: itemName }
             const invObj = await Inventory.find(findObj)
             updateArray.push(invObj[0])
         }
         else{
             const mongoID = ObjectID(id)
-            invObj = await Inventory.findById(mongoID)
+            const invObj = await Inventory.findById(mongoID)
             updateArray.push(invObj)
         }
     }
@@ -59,14 +59,14 @@ const getUpdateArray = async (queryReq) =>{
 }
 
 
-const getRates = async () =>{
-     //Free key base stuck in EUR, forces me to do basic math
-    //const api_key = process.env.FIXER_API_KEY
-    //const response = await axios.get(`http://data.fixer.io/api/latest?access_key=${api_key}`)
-    //return response.data.rates
-    
+const getRates = async () => {
+    //Free key base stuck in EUR, forces me to do basic math
+    const api_key = process.env.FIXER_API_KEY
+    const response = await axios.get(`http://data.fixer.io/api/latest?access_key=${api_key}`)
+    return response.data.rates
+
     //using memoed to save api calls
-    return({ AED: 4.308654,
+    /*    return({ AED: 4.308654,
         AFN: 90.183965,
         ALL: 124.022465,
         AMD: 572.02494,
@@ -233,7 +233,7 @@ const getRates = async () =>{
         ZAR: 19.869314,
         ZMK: 10559.269174,
         ZMW: 23.442934,
-        ZWL: 377.737369 })
+        ZWL: 377.737369 }) */
 }
 
 
