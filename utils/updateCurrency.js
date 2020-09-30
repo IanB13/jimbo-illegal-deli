@@ -8,9 +8,8 @@ const Inventory = require("../models/Inventory")
 const { ObjectID } = require("mongodb")
 const getRates = require("../services/currencyAPI")
 
-//TODO: fix naming and add better comments
-//TODO: CHECK IF VALID
 //code must exist, id or name but not both
+//updates inventory item or items currency
 const updateCurrency = async (queryReq) => {
     const isInvalid = invalidCheck(queryReq)
     if(isInvalid){
@@ -39,11 +38,11 @@ const updateCurrency = async (queryReq) => {
 
 //checks the input is valid
 const invalidCheck = (queryReq) => {
-    const {  code, id, itemName } = queryReq
+    const {  code, id, item } = queryReq
     if(!code){
         return({ "invalid":"currency code must be provided" })
     }
-    else if(!!id & !!itemName){
+    else if(!!id & !!item){
         return({ "invalid":" only one of id or item can be provided" })
     }
     else{
@@ -51,14 +50,14 @@ const invalidCheck = (queryReq) => {
     }
 }
 
-
+//created an array of objects that require updating
 const getUpdateArray = async (queryReq) => {
-    const {  code: newCurrencyCode, id, itemName } = queryReq
-    console.log({ newCurrencyCode, id, itemName })
+    const {  id, item } = queryReq
+
     let updateArray = []
-    if(itemName || id ){
-        if(itemName){
-            const findObj = { item: itemName }
+    if(item || id ){
+        if(item){
+            const findObj = { item }
             const invObj = await Inventory.find(findObj)
             updateArray.push(invObj[0])
         }
