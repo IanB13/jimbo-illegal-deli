@@ -11,7 +11,10 @@ cron.schedule('0 1 * * 3', orderSort); //For 1:00 am every Wednesday
 //mongoose config
 const mongoose = require('mongoose');
 require('dotenv').config();
-const uri = process.env.MONGODB_URI;
+let uri = process.env.MONGODB_URI;
+if (process.env.NODE_ENV === 'test') {
+  uri = process.env.TEST_MONGODB_URI
+}
 mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology: true  }).then(success =>{
   console.log(`connected at ${uri}`)
 }

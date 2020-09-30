@@ -4,12 +4,12 @@ const { ObjectID } = require('mongodb');
 const helicopterDistance = async (query) =>{
     const {latitude, longitude, id} = query
     const locationCords = {latitude,longitude}
-
+    //uses mongo ObjectId to use findById 
     const mongoID = ObjectID(id)
     const customer = await Customer.findById(mongoID)
-    console.log(customer)
+    //find distance
     const distanceMeter = haversineDist(locationCords,customer.address.coordinates)
-    const distanceMiles = Math.round(distanceMeter/1609.34)
+    const distanceMiles = Math.round(distanceMeter/1609.34) //converting to miles
     const distance ={
         meters : distanceMeter,
         miles : distanceMiles
