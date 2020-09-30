@@ -13,8 +13,10 @@ inventoryRouter.put("/order", async (request,response) => {
 
 //updates currency data
 inventoryRouter.put("/currency", async (request, response) => {
-    console.log(request.body)
     const status = await updateCurrency(request.body)
+    if(request.invalid){
+        response.status(400).json(status)
+    }
     response.status(200).json(status)
 })
 

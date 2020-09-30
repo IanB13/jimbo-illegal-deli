@@ -12,6 +12,10 @@ const getRates = require("../services/currencyAPI")
 //TODO: CHECK IF VALID
 //code must exist, id or name but not both
 const updateCurrency = async (queryReq) => {
+    const isInvalid = invalidCheck(queryReq)
+    if(isInvalid){
+        return isInvalid
+    }
     const updateArray = await getUpdateArray(queryReq)
     const { code: newCurrencyCode, } = queryReq
 
@@ -31,6 +35,20 @@ const updateCurrency = async (queryReq) => {
         returnArray.push(obj)
     }
     return returnArray
+}
+
+//checks the input is valid
+const invalidCheck = (queryReq) => {
+    const {  code, id, itemName } = queryReq
+    if(!code){
+        return({ "invalid":"currency code must be provided" })
+    }
+    else if(!!id & !!itemName){
+        return({ "invalid":" only one of id or item can be provided" })
+    }
+    else{
+        return false
+    }
 }
 
 
