@@ -1,6 +1,7 @@
 const testingRouter = require("express").Router()
 const Customer = require("../models/Customer")
 const Inventory = require("../models/Inventory")
+const Events = require("../models/Events")
 const custJSON = require("../deli_customers.json")
 const invJSON = require("../inventory.json")
 const addCurrencyCodes = require("../utils/addCurrencyCodes")
@@ -17,6 +18,7 @@ testingRouter.get("/reset", async (_request, response) => {
     await Customer.deleteMany({})
     const customers = await addPasswords(custJSON)
     await Customer.insertMany(customers)
+    await Events.deleteMany({})
     response.status(200).send("reset database")
 })
 

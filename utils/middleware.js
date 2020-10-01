@@ -52,7 +52,8 @@ const passwordRoute = (path) => {
         "/inventory",
         "/customers/distance/helicopter",
         "/customers/distance/bike",
-        "/customers"
+        "/customers",
+        "/events"
     ]
     //checks for direct matches
     if(passwordRoutes.includes(path)){

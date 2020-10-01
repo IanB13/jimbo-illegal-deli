@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const customerRouter = require("./controllers/customers")
 const inventoryRouter = require("./controllers/inventory")
+const eventRouter = require("./controllers/events")
 const testingRouter = require("./controllers/testing")
 const middleware = require("./utils/middleware")
 
@@ -29,6 +30,7 @@ app.use(middleware.passwordCheck)
 app.use(middleware.requestLogging)
 app.use("/customers",customerRouter)
 app.use("/inventory",inventoryRouter)
+app.use("/events",eventRouter)
 app.use("/testing",testingRouter)
 
 module.exports = app
