@@ -40,10 +40,11 @@ const requestLogging =  (request, _response, next) => {
     next()
 }
 
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: "unknown endpoint" })
+}
 
-
-module.exports = { passwordCheck , requestLogging }
-
+//helper function for password check
 //checks if the path requires a password to access
 const passwordRoute = (path) => {
     const passwordRoutes = [
@@ -61,7 +62,7 @@ const passwordRoute = (path) => {
     }
 }
 
-
+//helper function for password check
 const userPasswordCheck = async (uid,password) => {
     const customer = await Customer.findOne({ uid })
     if(customer){
@@ -71,3 +72,5 @@ const userPasswordCheck = async (uid,password) => {
         return false
     }
 }
+
+module.exports = { passwordCheck , requestLogging , unknownEndpoint }

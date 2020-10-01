@@ -31,6 +31,10 @@ app.use(middleware.requestLogging)
 app.use("/customers",customerRouter)
 app.use("/inventory",inventoryRouter)
 app.use("/events",eventRouter)
-app.use("/testing",testingRouter)
+//do for use in production enviroment
+if(!(process.env.NODE_ENV === "production" )){
+    app.use("/testing",testingRouter)
+}
+app.use(middleware.unknownEndpoint)
 
 module.exports = app
