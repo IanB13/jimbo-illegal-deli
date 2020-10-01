@@ -1,13 +1,24 @@
+const bcrypt  = require("bcrypt")
+const Customer = require("../models/Customer")
 require("dotenv")
 
-const passwordCheck =  (request, response, next) => {
+const passwordCheck = async (request, response, next) => {
     const password = request.header("Authorization")
     const jimboPassword = process.env.JIMBO_PASSWORD
 
     //checks for customer passwords when accessing inventory
     if(request.path === "/inventory/order"){
-        console.log("check password here?")
-        response.status(401).send("for checking user passwords")
+        if(!request.body.uid){
+            response.status(401).send("A uid is required")
+        }
+        const uid = request.body.uid
+        if(!password){
+            response.status(401).send("A password is required")
+        }
+        const check = await userPasswordCheck(uid,password)
+        if(!check){
+            response.status(401).send("F*CK OFF BOJIM")
+        }
     }
     //checks for JImbos password when accessing admin routes
     else if(passwordRoute(request.path)){
@@ -46,5 +57,17 @@ const passwordRoute = (path) => {
     //checks for direct matches
     if(passwordRoutes.includes(path)){
         return(true)
+    }
+}
+
+
+const userPasswordCheck = async (uid,password) => {
+    const customer = await Customer.findOne({ uid })
+    if(customer){
+        console.log("here?")
+        return await bcrypt.compare(password,customer.password)
+    }
+    else{
+        return false
     }
 }
