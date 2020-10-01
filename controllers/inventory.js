@@ -6,7 +6,6 @@ const createInvItem = require("../utils/createInvItem")
 
 //updates orders
 inventoryRouter.put("/order", async (request,response) => {
-    console.log(request.body)
     const order = await orderProcessing(request.body)
     response.status(200).json(order)
 })

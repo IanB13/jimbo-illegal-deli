@@ -6,7 +6,6 @@ const orderProcessing = async (request) => {
     for(const item of Object.entries(order)){
         const invItem = await Inventory.find({ item: item[0] })
         //allows negative items, for "BackOrder"
-        console.log(invItem)
         invItem[0].details.amount -= item[1]
         await Inventory.updateOne({ item: item[0] }, invItem[0])
         ordersArray.push(invItem[0])
