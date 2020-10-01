@@ -10,30 +10,37 @@ const getRates = require("../services/currencyAPI")
 
 //code must exist, id or name but not both
 //updates inventory item or items currency
-const updateCurrency = async (queryReq) => {
+const updateCurrency = async (queryReq, update) => {
     const isInvalid = invalidCheck(queryReq)
     if(isInvalid){
         return isInvalid
     }
-    const updateArray = await getUpdateArray(queryReq)
+    const invToUpdate = await getUpdateArray(queryReq)
     const { code: newCurrencyCode, } = queryReq
 
     const rates = await getRates()
-    const returnArray = []
-    for(const obj of updateArray){
+
+    const updatedInv = invToUpdate.map(obj => {
         const baseCurrencyCode = obj.supplier_details.base_currency_code
         const newRate = rates[newCurrencyCode]
         const oldRate = rates[baseCurrencyCode]
         const newPrice = obj.supplier_details.base_price * (newRate/oldRate)
         obj.details.currency_code = newCurrencyCode
         obj.details.price = Math.round(newPrice*100)/100
-        await Inventory.updateOne(
-            { _id: ObjectID(obj._id) },
-            obj
-        )
-        returnArray.push(obj)
+    })
+    //added a boolean update option in order to make database changes
+    if(update){
+        Promise.all( updatedInv.map( async (obj) => {
+            await Inventory.updateOne(
+                { _id: ObjectID(obj._id) },
+                obj
+            )
+        }))
+
     }
-    return returnArray
+
+    return updatedInv
+
 }
 
 //checks the input is valid
