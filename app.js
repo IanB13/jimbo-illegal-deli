@@ -27,7 +27,10 @@ mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology: true  }).then(
 
 app.use(express.json())
 app.use(middleware.passwordCheck)
-app.use(middleware.requestLogging)
+//do not use in testing enviroment
+if(!(process.env.NODE_ENV === "test" )){
+    app.use(middleware.requestLogging)
+}
 app.use("/customers",customerRouter)
 app.use("/inventory",inventoryRouter)
 app.use("/events",eventRouter)

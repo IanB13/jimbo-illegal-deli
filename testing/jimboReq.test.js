@@ -108,8 +108,6 @@ test("Adding hand sanatizer to database item ", async () => {
     expect(inventory.body[20].details.currency_code).toBe("IDR")
 })
 
-
-
 afterAll(() => {
     mongoose.connection.close()
 })

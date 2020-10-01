@@ -16,6 +16,7 @@ test("database reset ", async () => {
     expect(inventory.body.length).toBe(20)
 })
 
+//testing adding an item to the inventory
 test("Adding item ", async () => {
     await api
         .post("/inventory")
@@ -28,6 +29,7 @@ test("Adding item ", async () => {
     expect(inventory.body[20].details.currency_code).toBe("IDR")
 })
 
+//testing converting all currency
 test("converting currency", async ()  => {
     await api
         .put("/inventory/currency")
