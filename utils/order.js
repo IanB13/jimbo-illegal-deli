@@ -3,32 +3,40 @@ const Customer = require("../models/Customer")
 const Event = require("../models/Events")
 const updateCurrency = require("../utils/updateCurrency")
 
+//proccesses order, updates inventory and returns total price and currency code
+//assumes USD if currency_code not provided
 const orderProcessing = async (request) => {
+
     const { order , currency_code, uid } = request
 
-    let inv = null
+    //gets an array with modified currency
+    let invModCur = null
     if(currency_code){
-        inv =  await updateCurrency({ code:currency_code })
+        invModCur =  await updateCurrency({ code:currency_code })
     }
     else{
-        inv = await updateCurrency({ code: "USD" }) //assumes USD if not currency_code provided
+        invModCur = await updateCurrency({ code: "USD" })
     }
 
-    const ordersArray = []
-    //think I am trying to do 2 things here
-    //update Inventory items, use map??
-    for(const entry of Object.entries(order)){
+    //updates inventory
+    await Promise.all(Object.entries(order).map( async (entry) => {
         const item = entry[0]
         const quantity = entry[1]
         const invItem = await Inventory.findOne({ item: item })
-        const invItemCur = inv.filter(x => x.item=== item)[0]
         //allows negative items, for "BackOrder"
         invItem.details.amount -= quantity
         await Inventory.updateOne({ item: item }, invItem)
-        ordersArray.push(invItemCur)
-    }
+    }))
 
-    const totalCost = ordersArray.reduce((acc,cur) => {
+    //gets prices in requested currency
+    const ordersArrayModCur = Object.entries(order).map( (entry) => {
+        const item = entry[0]
+        const invItemCur = invModCur.filter(x => x.item=== item)[0]
+        return invItemCur
+    })
+
+    //gets total cost
+    const totalCost = ordersArrayModCur.reduce((acc,cur) => {
         acc+=cur.details.price
         return acc
     },0)
@@ -41,10 +49,12 @@ const orderProcessing = async (request) => {
         amount: totalCost,
         currency_code: code
     }
+    // updates customer last_transaction
     await Customer.updateOne(
         { uid } ,
         { $push: { last_transactions: transactionObj } })
 
+    // creates an order event
     await Event.create({
         uid,
         date,
