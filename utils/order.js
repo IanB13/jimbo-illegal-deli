@@ -6,27 +6,28 @@ const updateCurrency = require("../utils/updateCurrency")
 const orderProcessing = async (request) => {
     const { order , currency_code, uid } = request
 
-    //TODO: db calls, need new function
-    //switches db to updated Currency => prolly not a best practice
+    let inv = null
     if(currency_code){
-        await updateCurrency({ code:currency_code })
+        inv =  await updateCurrency({ code:currency_code })
     }
     else{
-        await updateCurrency({ code: "USD" }) //assumes USD if not currency_code provided
+        inv = await updateCurrency({ code: "USD" }) //assumes USD if not currency_code provided
     }
 
     const ordersArray = []
-    //update Inventory items
+    //think I am trying to do 2 things here
+    //update Inventory items, use map??
     for(const entry of Object.entries(order)){
         const item = entry[0]
         const quantity = entry[1]
         const invItem = await Inventory.findOne({ item: item })
+        const invItemCur = inv.filter(x => x.item=== item)[0]
         //allows negative items, for "BackOrder"
         invItem.details.amount -= quantity
         await Inventory.updateOne({ item: item }, invItem)
-        ordersArray.push(invItem)
-
+        ordersArray.push(invItemCur)
     }
+
     const totalCost = ordersArray.reduce((acc,cur) => {
         acc+=cur.details.price
         return acc

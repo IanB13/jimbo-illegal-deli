@@ -27,6 +27,7 @@ const updateCurrency = async (queryReq, update) => {
         const newPrice = obj.supplier_details.base_price * (newRate/oldRate)
         obj.details.currency_code = newCurrencyCode
         obj.details.price = Math.round(newPrice*100)/100
+        return obj
     })
     //added a boolean update option in order to make database changes
     if(update){
