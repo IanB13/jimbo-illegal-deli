@@ -25,7 +25,7 @@ mongoose.connect(uri, { useNewUrlParser: true,useUnifiedTopology: true  }).then(
 })
 
 app.use(express.json())
-app.use(middleware.passwordCheck)
+//app.use(middleware.passwordCheck)
 app.use(middleware.requestLogging)
 app.use("/customers",customerRouter)
 app.use("/inventory",inventoryRouter)

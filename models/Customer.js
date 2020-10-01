@@ -20,6 +20,7 @@ const customerSchema = new mongoose.Schema({
     email: String,
     gender: String,
     uid: String,
+    password: String,
     last_transactions:[{ date:Date,amount:Number }]
 })
 
