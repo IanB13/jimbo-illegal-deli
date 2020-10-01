@@ -21,7 +21,7 @@ const customerSchema = new mongoose.Schema({
     gender: String,
     uid: String,
     password: String,
-    last_transactions:[{ date:Date,amount:Number }]
+    last_transactions:[{ date:Date,amount:Number,currency_code: String }]
 })
 
 

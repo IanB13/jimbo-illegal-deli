@@ -4,7 +4,7 @@ const inventorySchema = new mongoose.Schema({
     item: String,
     details: {
         price: Number,
-        currency_code: String, //TODO: must be added
+        currency_code: String, //must be added
         amount: Number,
         last_purchased: Date,
         color: String,

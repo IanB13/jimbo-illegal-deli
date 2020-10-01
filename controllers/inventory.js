@@ -4,14 +4,15 @@ const updateCurrency = require("../utils/updateCurrency")
 const orderProcessing = require("../utils/order")
 const createInvItem = require("../utils/createInvItem")
 
-//updates orders
+
+//updates inventory for orders
 inventoryRouter.put("/order", async (request,response) => {
     const order = await orderProcessing(request.body)
     response.status(200).json(order)
 })
 
 
-//updates currency data
+//updates currency data in db
 inventoryRouter.put("/currency", async (request, response) => {
     const status = await updateCurrency(request.body)
     if(request.invalid){
@@ -26,14 +27,10 @@ inventoryRouter.post("/",  async (request, response) => {
     response.status(200).json(status)
 })
 
-//gets all inventory and returns a list
+//gets all inventory
 inventoryRouter.get("/", async (_request, response) => {
     const inventory =  await Inventory.find({})
     response.status(200).json(inventory)
 })
 
-
-
-
 module.exports = inventoryRouter
-
