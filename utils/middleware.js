@@ -64,7 +64,6 @@ const passwordRoute = (path) => {
 const userPasswordCheck = async (uid,password) => {
     const customer = await Customer.findOne({ uid })
     if(customer){
-        console.log("here?")
         return await bcrypt.compare(password,customer.password)
     }
     else{

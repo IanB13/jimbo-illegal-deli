@@ -1,8 +1,10 @@
 const mongoose = require("mongoose")
 const supertest = require("supertest")
 const app = require("../app")
-
+require("dotenv")
 const api = supertest(app)
+
+const password = process.env.JIMBO_PASSWORD
 
 //reset testing db
 beforeEach( async () => {
@@ -10,17 +12,18 @@ beforeEach( async () => {
 })
 
 test("database reset ", async () => {
-    const inventory = await api.get("/inventory")
+    const inventory = await api.get("/inventory").set("Authorization", password)
     expect(inventory.body.length).toBe(20)
 })
 
 test("Adding item ", async () => {
     await api
         .post("/inventory")
+        .set("Authorization", password)
         .send(inventoryItem)
         .expect(200)
 
-    const inventory = await api.get("/inventory")
+    const inventory = await api.get("/inventory").set("Authorization", password)
     expect(inventory.body[20].item).toBe("hand_sanitizer")
     expect(inventory.body[20].details.currency_code).toBe("IDR")
 })
@@ -28,10 +31,11 @@ test("Adding item ", async () => {
 test("converting currency", async ()  => {
     await api
         .put("/inventory/currency")
+        .set("Authorization", password)
         .send({ code:"USD" })
         .expect(200)
 
-    const inventory = await api.get("/inventory")
+    const inventory = await api.get("/inventory").set("Authorization", password)
     expect(inventory.body[3].details.currency_code).toBe("USD")
 })
 

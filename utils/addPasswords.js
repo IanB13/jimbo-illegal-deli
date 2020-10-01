@@ -5,7 +5,6 @@ const addPasswords = async (customers) => {
 
     const passwordCustomers = await Promise.all(customers.map(async customer => {
         const password = `Iam${customer.first_name}NOTBojim`
-        console.log(password)
         const passwordHash = await bcrypt.hash(password, 10)
         customer.password = passwordHash
         return customer

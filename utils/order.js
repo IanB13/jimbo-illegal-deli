@@ -17,12 +17,14 @@ const orderProcessing = async (request) => {
 
     const ordersArray = []
     //update Inventory items
-    for(const item of Object.entries(order)){
-        const invItem = await Inventory.find({ item: item[0] })
+    for(const entry of Object.entries(order)){
+        const item = entry[0]
+        const quantity = entry[1]
+        const invItem = await Inventory.findOne({ item: item })
         //allows negative items, for "BackOrder"
-        invItem[0].details.amount -= item[1]
-        await Inventory.updateOne({ item: item[0] }, invItem[0])
-        ordersArray.push(invItem[0])
+        invItem.details.amount -= quantity
+        await Inventory.updateOne({ item: item }, invItem)
+        ordersArray.push(invItem)
 
     }
     const totalCost = ordersArray.reduce((acc,cur) => {
