@@ -23,7 +23,7 @@
          "get": {
             "tags": ["Customers"],
             "description": "Gets all Customers",
-            "operationId": "for the URL",
+            "operationId": "GET customers",
             "produces": [
               "application/json"
             ],
@@ -38,7 +38,7 @@
           "get":{
             "tags":["Customers"],
             "description":"Gets an individual customer based on MongoDB ID",
-            "operationId":"get",
+            "operationId":"GET customers by id",
             "produces": [
               "application/json"
             ],
@@ -55,61 +55,91 @@
               "200": {
                 "description": "An individual customer is returned",
                 "schema":{
-                  "$ref":"#/definitions/deleteRes"
+                  "$ref":"#/definitions/customer"
                 }
               }
             }
           }
         },
-        "/customer/distance/helicopter": {
+        "/customers/distance/helicopter": {
           "get":{
             "tags":["Customers"],
-            "description":"Deletes a something",
-            "operationId":"delete",
+            "description":"Gets distance between customer and inputed coordinate point via helicopter",
+            "operationId":"GET distance helicopter",
             "produces": [
               "application/json"
             ],
             "parameters":[
                 {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
+                  "name": "id",
+                  "in": "query",
+                  "description": "customer ID",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "example": "5f75e6d1fc77d63950276a97"
+                },
+                {
+                  "name": "latitude",
+                  "in": "query",
+                  "description": "Lattitude of start point",
+                  "required": true,
+                  "type": "number"
+                },
+                {
+                  "name": "longitude",
+                  "in": "query",
+                  "description": "Longitude of start point",
+                  "required": true,
+                  "type": "number"
                 }
               ],
             "responses": {
               "200": {
                 "description": "delete response",
                 "schema":{
-                  "$ref":"#/definitions/deleteRes"
+                  "$ref":"#/definitions/distance"
                 }
               }
             }
           }
         },
-        "/customer/distance/bike": {
+        "/customers/distance/bike": {
           "get":{
             "tags":["Customers"],
-            "description":"Deletes a something",
-            "operationId":"delete",
+            "description":"Gets distance between customer and inputed coordinate point via bicycle",
+            "operationId":"GET distance bike",
             "produces": [
               "application/json"
             ],
             "parameters":[
                 {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
+                  "name": "id",
+                  "in": "query",
+                  "description": "customer ID",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "example": "5f75e6d1fc77d63950276a97"
+                },
+                {
+                  "name": "latitude",
+                  "in": "query",
+                  "description": "Lattitude of start point",
+                  "required": true,
+                  "type": "number"
+                },
+                {
+                  "name": "longitude",
+                  "in": "query",
+                  "description": "Longitude of start point",
+                  "required": true,
+                  "type": "number"
                 }
               ],
             "responses": {
               "200": {
                 "description": "delete response",
                 "schema":{
-                  "$ref":"#/definitions/deleteRes"
+                  "$ref":"#/definitions/distance"
                 }
               }
             }
@@ -118,32 +148,20 @@
         "/inventory": {
           "get":{
             "tags":["Inventory"],
-            "description":"Deletes a something",
-            "operationId":"get",
+            "description":"Gets all inventory items",
+            "operationId":"GET inventory",
             "produces": [
               "application/json"
             ],
-            "parameters":[
-                {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
-                  "required": true,
-                  "type": "string"
-                }
-              ],
             "responses": {
               "200": {
-                "description": "delete response",
-                "schema":{
-                  "$ref":"#/definitions/deleteRes"
-                }
+                "description": "All inventory Items"
               }
             }
           },
           "post":{
             "tags":["Inventory"],
-            "description":"Deletes a something",
+            "description":"Add a new Item to the Inventory",
             "operationId":"post",
             "produces": [
               "application/json"
@@ -170,8 +188,8 @@
         "/inventory/order": {
           "put":{
             "tags":["Inventory"],
-            "description":"Deletes a something",
-            "operationId":"put",
+            "description":"",
+            "operationId":"PUT order",
             "produces": [
               "application/json"
             ],
@@ -197,16 +215,16 @@
         "/inventory/currency": {
           "put":{
             "tags":["Inventory"],
-            "description":"Updates currency in database",
-            "operationId":"delete",
+            "description":"Updates currency in database to provided code, if an item of id is provided it will only update the selected inv item. Id or item can be provided, not both",
+            "operationId":"PUT Currency",
             "produces": [
               "application/json"
             ],
             "parameters":[
                 {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
+                  "name": "body",
+                  "in": "body",
+                  "description": " code id item",
                   "required": true,
                   "type": "string"
                 }
@@ -229,21 +247,9 @@
             "produces": [
               "application/json"
             ],
-            "parameters":[
-                {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
-                  "required": true,
-                  "type": "string"
-                }
-              ],
             "responses": {
               "200": {
-                "description": "delete response",
-                "schema":{
-                  "$ref":"#/definitions/deleteRes"
-                }
+                "description": "All events"
               }
             }
           }
@@ -257,81 +263,31 @@
 
 
     "definitions": {
-      "create": {
+      "distance": {
         "properties": {
-          "eventId": {
-            "required":true,
-            "type": "string",
-            "example": "mathmaticial"
+          "miles": {
+            "type": "number",
+            "example": 400
           },
-          "numberRequired": {
-            "required":true,
-            "type":"integer",
-            "format": "int64",
-            "example": 500
-          } 
+          "meters": {
+            "type": "number",
+            "example": 643738
+          }
         }
       },
-      "fun": {
+      "customer": {
         "properties": {
-          "eventId": {
-            "required":true,
+          "first_name": {
             "type": "string",
-            "example": "mathmaticial"
+            "example": "Jamaal"
           },
-          "numberRequired": {
-            "required":true,
-            "type":"integer",
-            "format": "int64",
-            "example": 500
-          } 
-        }
-      },
-      "response1": {
-          "properties": {
-            "jobID": {
-              "required":true,
-              "type": "string",
-              "example": "23423456543"
-            },
-            "request": {
-              "required":true,
-              "type": "schema",
-              "example": {
-                "eventId":"mathmaticial",
-                "numberRequired": 500
-              }
-            }
-        }
-      },
-      "response": {
-          "properties": {
-              "jobID": {
-                "required": true,
-                "type" : "string",
-                "example" : "12321432423"
-              }
-          }
-      },
-      "delete": {
-          "properties": {
-              "jobID": {
-                "required": true,
-                "type" : "string",
-                "example" : "234344234234"
-              },
-              "status" : {
-                "required": true,
-                "type": "string",
-                "example": "deleted"
-              }
-          }
-      },
-      "400error" : {
-         "properties": {
-          "message": {
+          "last_name": {
             "type": "string",
-            "example" : "400 Bad Request"
+            "example": "Egre"
+          },
+          "email": {
+            "type": "string",
+            "example": "jegred@redcross.org"
           }
         }
       }
