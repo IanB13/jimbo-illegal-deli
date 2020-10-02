@@ -229,19 +229,19 @@
             ],
             "parameters":[
                 {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
+                  "name": "body",
+                  "in": "body",
                   "required": true,
-                  "type": "string"
+                  "description":"item to add to database",
+                  "schema":{
+                    "type": "object",
+                    "$ref":"#/definitions/order"
+                  }
                 }
               ],
             "responses": {
               "200": {
-                "description": "delete response",
-                "schema":{
-                  "$ref":"#/definitions/deleteRes"
-                }
+                "description": "Order Response"
               }
             },
             "security":[
@@ -258,20 +258,20 @@
               "application/json"
             ],
             "parameters":[
-                {
-                  "name": "body",
-                  "in": "body",
-                  "description": " code id item",
-                  "required": true,
-                  "type": "string"
+              {
+                "name": "body",
+                "in": "body",
+                "required": true,
+                "description":"item to add to database",
+                "schema":{
+                  "type": "object",
+                  "$ref":"#/definitions/currencyChange"
                 }
+              }
               ],
             "responses": {
               "200": {
-                "description": "delete response",
-                "schema":{
-                  "$ref":"#/definitions/deleteRes"
-                }
+                "description": "Changed Inventory"
               }
             },
             "security":[
@@ -375,6 +375,35 @@
           },
           "item": {
             "type": "string"
+          }
+        }
+      },
+      "order": {
+        "properties": {
+          "order": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "currency_code": {
+            "type": "string"
+          },
+          "uid": {
+            "type": "string"
+          }
+        }
+      },
+      "currencyChange":{
+        "properties":{
+          "code":{
+            "type":"string"
+          },
+          "id":{
+            "type":"string"
+          },
+          "item":{
+            "type":"string"
           }
         }
       }
