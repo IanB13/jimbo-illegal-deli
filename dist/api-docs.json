@@ -3,10 +3,21 @@
     "info": {
       "version": "0.0.1",
       "title": "Jimbo's Ilegal Deli",
-      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base."
+      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base. \r\n In order to use the examples you must Authorize and provide a password"
     },
     "basePath": "/",
-
+    "securityDefinitions":{
+      "JimboPassword":{
+        "type":"apiKey",
+        "name":"Authorization",
+        "in":"header"
+      },
+      "UserPassword":{
+        "type":"apiKey",
+        "name":"Authorization",
+        "in":"header"
+      }
+    },
     "tags" : [
       {"name": "JID", 
       "description": "Get customer information"
@@ -31,7 +42,10 @@
               "200": {
                 "description": "Sent customers"
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           }
       },
       "/customers/{id}": {
@@ -58,7 +72,10 @@
                   "$ref":"#/definitions/customer"
                 }
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           }
         },
         "/customers/distance/helicopter": {
@@ -100,8 +117,14 @@
                   "$ref":"#/definitions/distance"
                 }
               }
-            }
-          }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
+          },
+          "security":[
+            {"JimboPassword":[]}
+            ]
         },
         "/customers/distance/bike": {
           "get":{
@@ -142,7 +165,10 @@
                   "$ref":"#/definitions/distance"
                 }
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           }
         },
         "/inventory": {
@@ -157,7 +183,10 @@
               "200": {
                 "description": "All inventory Items"
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           },
           "post":{
             "tags":["Inventory"],
@@ -168,21 +197,26 @@
             ],
             "parameters":[
                 {
-                  "name": "someVariable",
-                  "in": "path",
-                  "description": "ID to delete",
+                  "name": "body",
+                  "in": "body",
                   "required": true,
-                  "type": "string"
+                  "description":"item to add to database",
+                  "schema":{
+                    "type": "object",
+                    "$ref":"#/definitions/addItem"
+                  }
                 }
               ],
             "responses": {
               "200": {
-                "description": "delete response",
+                "description": "Add",
                 "schema":{
-                  "$ref":"#/definitions/deleteRes"
                 }
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           }
         },
         "/inventory/order": {
@@ -209,7 +243,10 @@
                   "$ref":"#/definitions/deleteRes"
                 }
               }
-            }
+            },
+            "security":[
+              {"UserPassword":[]}
+              ]
           }
         },
         "/inventory/currency": {
@@ -236,7 +273,10 @@
                   "$ref":"#/definitions/deleteRes"
                 }
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           }
         },
         "/events": {
@@ -251,14 +291,13 @@
               "200": {
                 "description": "All events"
               }
-            }
+            },
+            "security":[
+              {"JimboPassword":[]}
+              ]
           }
         }
     },
-
-
-
-
 
 
 
@@ -288,6 +327,54 @@
           "email": {
             "type": "string",
             "example": "jegred@redcross.org"
+          }
+        }
+      },
+      "addItem":{
+        "properties": {
+          "details": {
+            "type": "object",
+            "properties": {
+              "price":{
+                "type": "float"},
+              "amount":{
+                "type": "float"},
+              "color":{
+                "type": "string"},
+              "color_hex":{
+                "type": "string"},
+              "currency_code":{
+                "type": "string"}
+            }
+          },
+          "supplier_details": {
+            "type": "object",
+            "properties":{
+            "contact": {
+              "type": "object",
+              "properties":{
+                "phone":{
+                  "type":"string"
+                },
+                "email":{
+                  "type":"string"
+                } 
+              }
+            },
+            "country":{ 
+              "type":"string"
+              } ,
+            "country_code":{ 
+              "type":"string"
+              },
+            "currency":{ 
+              "type":"string"
+              }
+
+            }
+          },
+          "item": {
+            "type": "string"
           }
         }
       }
