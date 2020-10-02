@@ -6,10 +6,22 @@ const eventRouter = require("./controllers/events")
 const testingRouter = require("./controllers/testing")
 const middleware = require("./utils/middleware")
 
+
 //Cron job to sort customer orders by date
 const orderSort = require("./utils/orderSort")
 const cron = require("node-cron")
 cron.schedule("0 1 * * 3", orderSort) //For 1:00 am every Wednesday
+
+//for swagger
+const subpath = express()
+
+app.use("/v1", subpath)
+app.use(express.static("dist"))
+
+app.get("/",  (_request, response) => {
+    response.sendFile(__dirname + "/dist/index.html")
+})
+// end of swagger
 
 //mongoose config
 const mongoose = require("mongoose")

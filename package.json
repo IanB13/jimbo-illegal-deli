@@ -7,8 +7,8 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "test-Jimbo":"cross-env NODE_ENV=test jest /testing/jimboReq.test.js --verbose --runInBand",
-    "test-Bojim":"cross-env NODE_ENV=test jest bojimAttack --verbose --runInBand",
+    "test-Jimbo": "cross-env NODE_ENV=test jest /testing/jimboReq.test.js --verbose --runInBand",
+    "test-Bojim": "cross-env NODE_ENV=test jest bojimAttack --verbose --runInBand",
     "lint": "eslint ."
   },
   "repository": {
@@ -28,7 +28,8 @@
     "express": "^4.17.1",
     "mongodb": "^3.6.2",
     "mongoose": "^5.10.7",
-    "node-cron": "^2.0.3"
+    "node-cron": "^2.0.3",
+    "swagger-node-express": "^2.1.3"
   },
   "devDependencies": {
     "cross-env": "^7.0.2",
