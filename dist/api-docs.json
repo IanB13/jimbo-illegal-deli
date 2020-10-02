@@ -1,19 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-      "version": "1.0.0",
-      "title": "Sample spec",
-      "description": "Sample spec for Swagger",
-      "termsOfService": "http://swagger.io/terms/"
+      "version": "0.0.1",
+      "title": "Jimbo's Ilegal Deli",
+      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base."
     },
     "basePath": "/",
+
     "tags" : [
-      {"name": "Tag1", 
-      "description": "API for something"
+      {"name": "JID", 
+      "description": "Get customer information"
       }
-    ],
-    "schemes": [
-      "https"
     ],
     "consumes": [
       "application/json"
@@ -22,9 +19,9 @@
       "application/json"
     ],
     "paths": {
-      "/path/to/method": {
-         "post": {
-            "tags": ["Tag1"],
+      "/customers": {
+         "get": {
+            "tags": ["Customers"],
             "description": "what this API does",
             "operationId": "for the URL",
             "produces": [
@@ -51,9 +48,27 @@
             }
           }
       },
-      "/path/to/method/{someVariable}": {
-          "delete":{
-            "tags":["Tag1"],
+      "/customer/:id": {
+          "get":{
+            "tags":["Customers"],
+            "description":"Deletes a something",
+            "operationId":"delete",
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Gets a list of all customers",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
+                }
+              }
+            }
+          }
+        },
+        "/customer/distance/helicopter": {
+          "get":{
+            "tags":["Customers"],
             "description":"Deletes a something",
             "operationId":"delete",
             "produces": [
@@ -76,34 +91,176 @@
                 }
               }
             }
-          },
-        "get":{
-            "tags": [ "Tag1"],
-            "description": "Returns the status of something",
-            "operationId": "findById",
+          }
+        },
+        "/customer/distance/bike": {
+          "get":{
+            "tags":["Customers"],
+            "description":"Deletes a something",
+            "operationId":"delete",
             "produces": [
               "application/json"
             ],
-            "parameters": [
+            "parameters":[
                 {
-                  "name": "ID",
+                  "name": "someVariable",
                   "in": "path",
-                  "description": "ID to fetch",
+                  "description": "ID to delete",
                   "required": true,
                   "type": "string"
                 }
               ],
-          "responses": {
+            "responses": {
               "200": {
-                "description": "response",
-                "schema": {
-                  "$ref": "#/definitions/response1"
+                "description": "delete response",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
+                }
+              }
+            }
+          }
+        },
+        "/inventory": {
+          "get":{
+            "tags":["Inventory"],
+            "description":"Deletes a something",
+            "operationId":"get",
+            "produces": [
+              "application/json"
+            ],
+            "parameters":[
+                {
+                  "name": "someVariable",
+                  "in": "path",
+                  "description": "ID to delete",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "delete response",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
+                }
+              }
+            }
+          },
+          "post":{
+            "tags":["Inventory"],
+            "description":"Deletes a something",
+            "operationId":"post",
+            "produces": [
+              "application/json"
+            ],
+            "parameters":[
+                {
+                  "name": "someVariable",
+                  "in": "path",
+                  "description": "ID to delete",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "delete response",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
+                }
+              }
+            }
+          }
+        },
+        "/inventory/order": {
+          "put":{
+            "tags":["Inventory"],
+            "description":"Deletes a something",
+            "operationId":"put",
+            "produces": [
+              "application/json"
+            ],
+            "parameters":[
+                {
+                  "name": "someVariable",
+                  "in": "path",
+                  "description": "ID to delete",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "delete response",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
+                }
+              }
+            }
+          }
+        },
+        "/inventory/currency": {
+          "put":{
+            "tags":["Inventory"],
+            "description":"Updates currency in database",
+            "operationId":"delete",
+            "produces": [
+              "application/json"
+            ],
+            "parameters":[
+                {
+                  "name": "someVariable",
+                  "in": "path",
+                  "description": "ID to delete",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "delete response",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
+                }
+              }
+            }
+          }
+        },
+        "/events": {
+          "get":{
+            "tags":["Events"],
+            "description":"Get all events in database",
+            "operationId":"get",
+            "produces": [
+              "application/json"
+            ],
+            "parameters":[
+                {
+                  "name": "someVariable",
+                  "in": "path",
+                  "description": "ID to delete",
+                  "required": true,
+                  "type": "string"
+                }
+              ],
+            "responses": {
+              "200": {
+                "description": "delete response",
+                "schema":{
+                  "$ref":"#/definitions/deleteRes"
                 }
               }
             }
           }
         }
     },
+
+
+
+
+
+
+
     "definitions": {
       "create": {
         "properties": {
