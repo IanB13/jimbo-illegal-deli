@@ -6,10 +6,32 @@ const eventRouter = require("./controllers/events")
 const testingRouter = require("./controllers/testing")
 const middleware = require("./utils/middleware")
 
+
 //Cron job to sort customer orders by date
 const orderSort = require("./utils/orderSort")
 const cron = require("node-cron")
 cron.schedule("0 1 * * 3", orderSort) //For 1:00 am every Wednesday
+
+//for swagger
+var subpath = express()
+
+app.use("/v1", subpath)
+app.use(express.static("dist"))
+
+var swagger = require("swagger-node-express").createNew(subpath)
+
+swagger.setApiInfo({
+    title: "example API",
+    description: "API to do something, manage something...",
+    termsOfServiceUrl: "",
+    contact: "yourname@something.com",
+    license: "",
+    licenseUrl: ""
+})
+
+app.get("/", function (req, res) {
+    res.sendFile(__dirname + "/dist/index.html")
+})
 
 //mongoose config
 const mongoose = require("mongoose")
