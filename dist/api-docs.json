@@ -19,8 +19,17 @@
       }
     },
     "tags" : [
-      {"name": "JID", 
-      "description": "Get customer information"
+      {
+      "name": "Customers", 
+      "description": "View customer information and get distances from customers" 
+      },
+      {
+        "name": "Inventory",
+        "description":"View inventory and modify inventory currency and add inventory items"
+      },
+      {
+        "name": "Events",
+        "description":"A log of events"
       }
     ],
     "consumes": [
@@ -62,7 +71,8 @@
                 "in": "path",
                 "description": "MongoDB ID to find customer by",
                 "required": true,
-                "type": "string"
+                "type": "string",
+                "example": "5f75e6d1fc77d63950276a97"
               }
             ],
             "responses": {
