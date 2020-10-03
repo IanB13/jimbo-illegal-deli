@@ -88,7 +88,7 @@
               ]
           }
         },
-        "/customers/distance/helicopter": {
+        "/customers/distance/": {
           "get":{
             "tags":["Customers"],
             "description":"Gets distance between customer and inputed coordinate point via helicopter",
@@ -122,7 +122,7 @@
               ],
             "responses": {
               "200": {
-                "description": "delete response",
+                "description": "distance from point to customer",
                 "schema":{
                   "$ref":"#/definitions/distance"
                 }
@@ -135,51 +135,6 @@
           "security":[
             {"JimboPassword":[]}
             ]
-        },
-        "/customers/distance/bike": {
-          "get":{
-            "tags":["Customers"],
-            "description":"Gets distance between customer and inputed coordinate point via bicycle",
-            "operationId":"GET distance bike",
-            "produces": [
-              "application/json"
-            ],
-            "parameters":[
-                {
-                  "name": "id",
-                  "in": "query",
-                  "description": "customer ID",
-                  "required": true,
-                  "type": "string",
-                  "example": "5f75e6d1fc77d63950276a97"
-                },
-                {
-                  "name": "latitude",
-                  "in": "query",
-                  "description": "Lattitude of start point",
-                  "required": true,
-                  "type": "number"
-                },
-                {
-                  "name": "longitude",
-                  "in": "query",
-                  "description": "Longitude of start point",
-                  "required": true,
-                  "type": "number"
-                }
-              ],
-            "responses": {
-              "200": {
-                "description": "delete response",
-                "schema":{
-                  "$ref":"#/definitions/distance"
-                }
-              }
-            },
-            "security":[
-              {"JimboPassword":[]}
-              ]
-          }
         },
         "/inventory": {
           "get":{
