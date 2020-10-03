@@ -1,6 +1,6 @@
 const customerRouter = require("express").Router()
 const Customer = require("../models/Customer")
-const distance = require("../utils/distance")
+const distance = require("../utils/customers/distance")
 
 //TODO: does nothing, use google maps to make bike data
 customerRouter.get("/distance/bike", async (request, response) => {

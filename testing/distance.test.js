@@ -1,4 +1,4 @@
-const helicopterDistance = require("../utils/distance").helicopter
+const helicopterDistance = require("../utils/customers/distance").helicopter
 const mongoose = require("mongoose")
 const Customer = require("../models/Customer")
 const supertest = require("supertest")

@@ -1,8 +1,8 @@
 const inventoryRouter = require("express").Router()
 const Inventory = require("../models/Inventory")
-const updateCurrency = require("../utils/updateCurrency")
-const orderProcessing = require("../utils/order")
-const createInvItem = require("../utils/createInvItem")
+const updateCurrency = require("../utils/inventory/updateCurrency")
+const orderProcessing = require("../utils/inventory/order")
+const createInvItem = require("../utils/inventory/addItem")
 
 
 //updates inventory for orders

@@ -1,4 +1,4 @@
-const Inventory = require("../models/Inventory")
+const Inventory = require("../../models/Inventory")
 const addCurrencyCodes = require("./addCurrencyCodes")
 
 const createInventory = async (item) => {

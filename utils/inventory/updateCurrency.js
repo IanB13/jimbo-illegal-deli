@@ -4,9 +4,9 @@ id and name are optional, but only one can be provided
 if an id or name id provided only the inventory item matching will be updated
 otherwise all items will be updated
 */
-const Inventory = require("../models/Inventory")
+const Inventory = require("../../models/Inventory")
 const { ObjectID } = require("mongodb")
-const getRates = require("../services/currencyAPI")
+const getRates = require("../../services/currencyAPI")
 
 //code must exist, id or name but not both
 //updates inventory item or items currency

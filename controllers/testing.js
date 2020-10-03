@@ -4,8 +4,8 @@ const Inventory = require("../models/Inventory")
 const Events = require("../models/Events")
 const custJSON = require("../resources/deli_customers.json")
 const invJSON = require("../resources/inventory.json")
-const addCurrencyCodes = require("../utils/addCurrencyCodes")
-const addPasswords = require("../utils/addPasswords")
+const addCurrencyCodes = require("../utils/inventory/addCurrencyCodes")
+const addPasswords = require("../utils/customers/addPasswords")
 
 
 testingRouter.get("/reset", async (_request, response) => {

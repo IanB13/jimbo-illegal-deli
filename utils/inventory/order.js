@@ -1,7 +1,7 @@
-const Inventory = require("../models/Inventory")
-const Customer = require("../models/Customer")
-const Event = require("../models/Events")
-const updateCurrency = require("../utils/updateCurrency")
+const Inventory = require("../../models/Inventory")
+const Customer = require("../../models/Customer")
+const Event = require("../../models/Events")
+const updateCurrency = require("../inventory/updateCurrency")
 
 //proccesses order, updates inventory and returns total price and currency code
 //assumes USD if currency_code not provided

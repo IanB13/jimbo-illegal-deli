@@ -1,4 +1,4 @@
-const findCurrencyCode = require("../services/countryAPI")
+const findCurrencyCode = require("../../services/countryAPI")
 
 //utilises  https://restcountries.eu/rest/v2 to create
 //currency_code and base_price, base_currency_code for inventory objects

@@ -7,7 +7,7 @@ const api = supertest(app)
 //Testing customer endpoint security
 
 //No password
-test("No Auth /customers", async () => {
+test("No password /customers", async () => {
     const response = await api
         .get("/customers")
         .expect(401)
@@ -15,7 +15,7 @@ test("No Auth /customers", async () => {
 })
 
 //Incorrect password
-test("Inccorect Auth /customers", async () => {
+test("Incorect password /customers", async () => {
     const response = await api
         .get("/customers")
         .set("Authorization", "BojimIsAwsome")
@@ -26,7 +26,7 @@ test("Inccorect Auth /customers", async () => {
 //testing inventory endpoint security
 
 //no password
-test("No Auth /invern", async () => {
+test("No password /inventory", async () => {
     const response = await api
         .get("/inventory")
         .expect(401)
@@ -34,7 +34,7 @@ test("No Auth /invern", async () => {
 })
 
 //Incorrect password
-test("Inccorect Auth /customers", async () => {
+test("Incorect password /inventory", async () => {
     const response = await api
         .get("/inventory")
         .set("Authorization", "BojimIsAwsome")
