@@ -7,4 +7,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - run: npm i
-      - run: mongodb -v
+        env:
+            NODE_ENV: "test"
+            MONGODB_URI: ${{ secrets.MONGODB_URI }}
+            TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+            FIXER_API_KEY: ${{ secrets.FIXER_API_KEY }}
+            JIMBO_PASSWORD: ${{ secrets.JIMBO_PASSWORD }}
+      - run: npm run test
