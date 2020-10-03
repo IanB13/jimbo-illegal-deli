@@ -18,6 +18,6 @@ test("medium helicopter distance test", async () => {
     expect( (result.meters)/1000).toBeCloseTo(21560/1000 , 0) //within the same amount of km
 })
 
-afterAll(() => {
-    mongoose.connection.close()
+afterAll( async () => {
+    await mongoose.connection.close()
 })

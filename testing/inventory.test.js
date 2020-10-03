@@ -41,8 +41,8 @@ test("converting currency", async ()  => {
     expect(inventory.body[3].details.currency_code).toBe("USD")
 })
 
-afterAll(() => {
-    mongoose.connection.close()
+afterAll( async () => {
+    await mongoose.connection.close()
 })
 
 const inventoryItem = {
