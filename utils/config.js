@@ -22,6 +22,7 @@ const PASSWORD_PROTECTED =[
 const PASSWORD_PROTECTED_PARAMS =[
     "/customers"
 ]
+const PORT = process.env.PORT || 8080
 
 module.exports = {
     MONGODB_URI,
@@ -31,4 +32,5 @@ module.exports = {
     JIMBO_PASSWORD,
     PASSWORD_PROTECTED,
     PASSWORD_PROTECTED_PARAMS,
+    PORT
 }

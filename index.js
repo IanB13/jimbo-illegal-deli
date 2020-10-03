@@ -1,7 +1,8 @@
+const config = require("./utils/config")
 // Import the app
 const app = require("./app")
 // Setup server port
-const port = process.env.PORT || 8080
+const port = config.PORT
 
 // Launch app to listen to specified port
 app.listen(port, function () {
