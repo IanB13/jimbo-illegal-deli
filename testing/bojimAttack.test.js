@@ -14,7 +14,7 @@ test("No Auth /customers", async () => {
     expect(response.text).toBe("A password is required")
 })
 
-//Inccorrect password
+//Incorrect password
 test("Inccorect Auth /customers", async () => {
     const response = await api
         .get("/customers")
@@ -23,8 +23,24 @@ test("Inccorect Auth /customers", async () => {
     expect(response.text).toBe("F*CK OFF BOJIM")
 })
 
-//testing iventory endpoint security
+//testing inventory endpoint security
 
+//no password
+test("No Auth /invern", async () => {
+    const response = await api
+        .get("/inventory")
+        .expect(401)
+    expect(response.text).toBe("A password is required")
+})
+
+//Incorrect password
+test("Inccorect Auth /customers", async () => {
+    const response = await api
+        .get("/inventory")
+        .set("Authorization", "BojimIsAwsome")
+        .expect(401)
+    expect(response.text).toBe("F*CK OFF BOJIM")
+})
 
 afterAll(  async () => {
     await mongoose.connection.close()
