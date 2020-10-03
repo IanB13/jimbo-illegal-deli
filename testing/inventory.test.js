@@ -1,10 +1,10 @@
 const mongoose = require("mongoose")
 const supertest = require("supertest")
 const app = require("../app")
-require("dotenv")
+const config = require("../utils/config")
 const api = supertest(app)
 
-const password = process.env.JIMBO_PASSWORD
+const password = config.JIMBO_PASSWORD
 
 //reset testing db
 beforeEach( async () => {

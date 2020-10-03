@@ -1,10 +1,10 @@
 const bcrypt  = require("bcrypt")
 const Customer = require("../models/Customer")
-require("dotenv")
+const config = require("../utils/config")
 
 const passwordCheck = async (request, response, next) => {
     const password = request.header("Authorization")
-    const jimboPassword = process.env.JIMBO_PASSWORD
+    const jimboPassword = config.JIMBO_PASSWORD
     //checks if a response is made
     let responseSent = false
     //checks for customer passwords when accessing inventory
@@ -55,22 +55,13 @@ const unknownEndpoint = (request, response) => {
 //helper function for password check
 //checks if the path requires a password to access
 const passwordRoute = (path) => {
-    const passwordRoutes = [
-        "/customers",
-        "/inventory/currency",
-        "/inventory",
-        "/customers/distance/helicopter",
-        "/customers/distance/bike",
-        "/events"
-    ]
+    const passwordRoutes = config.PASSWORD_PROTECTED
     //checks for direct matches
     if(passwordRoutes.includes(path)){
         return(true)
     }
     //checks routes with params
-    const paramRoutes =[
-        "/customers",
-    ]
+    const paramRoutes = config.PASSWORD_PROTECTED_PARAMS
     for(const route of paramRoutes){
         if(route === path.slice(0,route.length)){
             return true
