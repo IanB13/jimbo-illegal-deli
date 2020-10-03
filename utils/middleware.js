@@ -5,31 +5,39 @@ require("dotenv")
 const passwordCheck = async (request, response, next) => {
     const password = request.header("Authorization")
     const jimboPassword = process.env.JIMBO_PASSWORD
-
+    //checks if a response is made
+    let responseSent = false
     //checks for customer passwords when accessing inventory
     if(request.path === "/inventory/order"){
         if(!request.body.uid){
+            responseSent = true
             response.status(401).send("A uid is required")
         }
         const uid = request.body.uid
         if(!password){
+            responseSent = true
             response.status(401).send("A password is required")
         }
         const check = await userPasswordCheck(uid,password)
         if(!check){
+            responseSent = true
             response.status(401).send("F*CK OFF BOJIM")
         }
     }
     //checks for JImbos password when accessing admin routes
     else if(passwordRoute(request.path)){
         if(!password){
+            responseSent = true
             response.status(401).send("A password is required")
         }
         else if( password !== jimboPassword){
+            responseSent = true
             response.status(401).send("F*CK OFF BOJIM")
         }
     }
-    next()
+    if(!responseSent){
+        next()
+    }
 }
 
 const requestLogging =  (request, _response, next) => {
@@ -53,13 +61,23 @@ const passwordRoute = (path) => {
         "/inventory",
         "/customers/distance/helicopter",
         "/customers/distance/bike",
-        "/customers",
         "/events"
     ]
     //checks for direct matches
     if(passwordRoutes.includes(path)){
         return(true)
     }
+    //checks routes with params
+    const paramRoutes =[
+        "/customers",
+    ]
+    for(const route of paramRoutes){
+        if(route === path.slice(0,route.length)){
+            return true
+        }
+    }
+
+    return false
 }
 
 //helper function for password check
