@@ -9,9 +9,9 @@ const config = require("./utils/config")
 const mongoose = require("mongoose")
 
 //Cron job to sort customer orders by date
-const orderSort = require("./utils/customers/orderSort")
+const transactionSort = require("./utils/customers/transactionSort")
 const cron = require("node-cron")
-cron.schedule("0 1 * * 3", orderSort) //For 1:00 am every Wednesday
+cron.schedule("0 1 * * 3", transactionSort) //For 1:00 am every Wednesday
 
 //for swagger api documentation
 //using subpath to avoid conflict

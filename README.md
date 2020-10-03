@@ -13,17 +13,27 @@ Set-up:
 
 Now, what does Jimbo’s Deli need from you?
 
++ I made some slight devations, in order to put the data online in a scalable way I hosted the backend data on a mongoDB Atlas instance. I decided to use the mongoDB Ids
+
 1.	Create an endpoint that will allow you to retrieve the `first_name`, `last_name` and `email` of each customer from the database.
++ Added /customer/:id endpoint which retrieves the specified data. Also added a /customer that retrives all data.
 2.	As you can see, Jimbo's assistant, Mahmood, did a pretty bad job putting everything online so the `last_transactions` are not ordered for the customers. Please write a script that orders these. Jimbo's also asking if you could make sure that this script runs every wednesday at 1am (if the app is running of course). 
++ Added cron job that runs every wednesday at 1am and sorts last_transaction customer data. 
 3. In this kind of business you often get "troublesome" customers. Sometimes Jimbo needs to pay them a little visit to remind them that he is un-f*ck-with-able. Please write an endpoint that will calculate the distance between a given place and a customer to help Jimbo determine if it's worth it to visit them.
++ Added customer/distance endpoint which uses haversine function to find the distance to a customer. Uses a query string which takes the customers ID, and the lattitude and longitude of the point which you wish to calculate the distance from. 
 4.	Create an endpoint that can update the currencies and prices of suppliers with real time conversion rates.
++ Inventory currency was not very well named, eg: Tawain dollar and Grenada dollar are both dollars but aren't worth the same. So I decided to use the counrty code as it is the only consitent data that I could easily use to find other data. I used the rest countries API to find the currency code using the country code. I then attatched the currency code to the inventory item. 
 5.	Lastly, create an endpoint that can add items to the inventory.
++ added put at /inventory endpoint that allows users to add an item to the inventory. Items that are added have a currency code attached. 
 6. Jimbo's rival, Bojim, knows a thing or two about computers so Jimbo's afraid that he might use his app to mess up his inventory. He asks you to make sure that all the endpoints he mentioned until now can only be accessed if you add the passphrase "Money4MeNot4u" somewhere in the request.
++ Jimbo's password must be added as an Authorization header in order to acces all endpoints except the /inventory/order endpoint, which uses different authentication
 
 Jimbo also wants his customers to benefit from this upgrade (but not too much).
 
 1.	Create an endpoint that can process customer orders (make the relevant database updates).
++  Added a /inventory/order endpoint that takes customer orders. Cutsomers must provide their uid in the body of the request and their password in the Authorization header
 2. Jimbo wants to make sure that only his registered customers can use the app. Everytime they do, he wants to store these "events" inside a new database that also shows who made the request and when it was made. He doesn't care about how it's done, as long as it's done.
++ orders are added to an events database
 
 Jimbo has had major trust issued ever since his mum lied to him, claiming that his goldfish turned invisble even though she accidently killed it. Therefore, he asks you to run a few tests to prove that your app works, he will then check the databases to see if stuff changed acordingly.
 
@@ -32,5 +42,7 @@ Jimbo has had major trust issued ever since his mum lied to him, claiming that h
   * Customer with `id = 1` (probably Dan Bilzerian’s long-lost cousin) has bought `1 helicopter`, `5 AK47s`, `3 cocaines`  
   
   * For this year, we are adding a new item to our menu, it’s `hand_sanitizer`. It’ll be supplied by the same exact supplier as `toilet_paper`. We’ll order `500`, with a `10.00` price tag. Color will be `green`, hex: `#302`.
+
++ All of Jimbos required tests are completed using jest
 
 Thank you very much for your help. You have 1 week to complete the task. 
