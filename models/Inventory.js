@@ -1,8 +1,10 @@
 const mongoose = require("mongoose")
+const uniqueValidator = require("mongoose-unique-validator")
 
 const inventorySchema = new mongoose.Schema({
     item: {
         type: String,
+        unique: true,
         required: [true, "item is required"]
     },
     details: {
@@ -37,6 +39,7 @@ const inventorySchema = new mongoose.Schema({
     }
 })
 
+inventorySchema.plugin(uniqueValidator)
 
 const Inventory = mongoose.model("inventory", inventorySchema , "inventory")
 
