@@ -91,7 +91,7 @@
         "/customers/distance/": {
           "get":{
             "tags":["Customers"],
-            "description":"Gets distance between customer and inputed coordinate point via helicopter",
+            "description":"Gets distance between customer and inputed coordinate point via helicopter.",
             "operationId":"GET distance helicopter",
             "produces": [
               "application/json"
@@ -155,7 +155,7 @@
           },
           "post":{
             "tags":["Inventory"],
-            "description":"Add a new Item to the Inventory",
+            "description":"Adds a new Item to the Inventory",
             "operationId":"post",
             "produces": [
               "application/json"
@@ -301,14 +301,12 @@
             "type": "object",
             "properties": {
               "price":{
-                "type": "float"},
+                "type": "number"},
               "amount":{
-                "type": "float"},
+                "type": "number"},
               "color":{
                 "type": "string"},
               "color_hex":{
-                "type": "string"},
-              "currency_code":{
                 "type": "string"}
             }
           },
