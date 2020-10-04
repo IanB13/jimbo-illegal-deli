@@ -1,5 +1,7 @@
 name: test-on-push
-on: [push]
+push:
+  branches:
+    - main
 jobs:
   jest-test:
     runs-on: ubuntu-latest
@@ -14,13 +16,14 @@ jobs:
             TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
             FIXER_API_KEY: ${{ secrets.FIXER_API_KEY }}
             JIMBO_PASSWORD: ${{ secrets.JIMBO_PASSWORD }}
-  deploy:
-    needs: jest-test
+  deploy: 
+    needs: jest-test #Only deploys if jest-test passes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.5.7
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "jimbo-ilegal-deli" #Must be unique in Heroku
+          heroku_app_name: "jimbo-ilegal-deli" 
           heroku_email: "ianapblair@gmail.com"
+          usedocker: true
