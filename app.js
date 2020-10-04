@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+require("express-async-errors")
 const customerRouter = require("./controllers/customers")
 const inventoryRouter = require("./controllers/inventory")
 const eventRouter = require("./controllers/events")
@@ -51,5 +52,6 @@ if(!(config.NODE_ENV === "production" )){
     app.use("/testing",testingRouter)
 }
 app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 module.exports = app
