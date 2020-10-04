@@ -5,7 +5,7 @@ const customerRouter = require("./controllers/customers")
 const inventoryRouter = require("./controllers/inventory")
 const eventRouter = require("./controllers/events")
 const testingRouter = require("./controllers/testing")
-const middleware = require("./utils/middleware")
+const middleware = require("./utils/middleware/")
 const config = require("./utils/config")
 const mongoose = require("mongoose")
 
