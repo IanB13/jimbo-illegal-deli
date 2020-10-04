@@ -1,6 +1,6 @@
 const bcrypt  = require("bcrypt")
-const Customer = require("../models/Customer")
-const config = require("../utils/config")
+const Customer = require("../../models/Customer")
+const config = require("../../utils/config")
 
 const passwordCheck = async (request, response, next) => {
     const password = request.header("Authorization")
@@ -40,16 +40,15 @@ const passwordCheck = async (request, response, next) => {
     }
 }
 
-const requestLogging =  (request, _response, next) => {
-    console.log("Method:", request.method)
-    console.log("Path:  ", request.path)
-    console.log("Body:  ", request.body)
-    console.log("---")
-    next()
-}
-
-const unknownEndpoint = (request, response) => {
-    response.status(404).send({ error: "unknown endpoint" })
+//helper function for password check
+const userPasswordCheck = async (uid,password) => {
+    const customer = await Customer.findOne({ uid })
+    if(customer){
+        return await bcrypt.compare(password,customer.password)
+    }
+    else{
+        return false
+    }
 }
 
 //helper function for password check
@@ -71,15 +70,4 @@ const passwordRoute = (path) => {
     return false
 }
 
-//helper function for password check
-const userPasswordCheck = async (uid,password) => {
-    const customer = await Customer.findOne({ uid })
-    if(customer){
-        return await bcrypt.compare(password,customer.password)
-    }
-    else{
-        return false
-    }
-}
-
-module.exports = { passwordCheck , requestLogging , unknownEndpoint }
+module.exports = passwordCheck

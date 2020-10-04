@@ -24,6 +24,14 @@ const customerSchema = new mongoose.Schema({
     last_transactions:[{ date:Date,amount:Number,currency_code: String }]
 })
 
+customerSchema.set("toJSON", {
+    transform: (_document, returnedObject) => {
+        returnedObject.id = returnedObject._id.toString()
+        delete returnedObject.password
+        delete returnedObject.__v
+    }
+})
+
 
 const Customer = mongoose.model("Customer", customerSchema)
 
