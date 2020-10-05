@@ -197,7 +197,7 @@
           "put":{
             "tags":["Inventory"],
             "summary":"processes a customer order",
-            "description":"Processes a customer order. Must include the customers UID. This endpoint is protected by a the customer's password and it must be provided in the Authorization header",
+            "description":"Processes a customer order. Must include the customers UID. The order parameter is an array of objects. Object inside the order array works as {'item': quantity} .This endpoint is protected by a the customer's password and it must be provided in the Authorization header",
             "operationId":"PUT order",
             "produces": [
               "application/json"
