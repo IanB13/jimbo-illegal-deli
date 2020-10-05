@@ -1,15 +1,11 @@
-/* updates inventory currency
-code is needed, and is the currency code
-id and name are optional, but only one can be provided
-if an id or name id provided only the inventory item matching will be updated
-otherwise all items will be updated
-*/
 const Inventory = require("../../models/Inventory")
 const { ObjectID } = require("mongodb")
 const getRates = require("../../services/currencyAPI")
 
-//code must exist, id or name but not both
-//updates inventory item or items currency
+/* code must exist, id or name but not both
+updates inventory item or items currency
+only updates if update is passed so code can be used for orders
+without modifying db */
 const updateCurrency = async (queryReq, update) => {
     const isInvalid = invalidCheck(queryReq)
     if(isInvalid){
@@ -29,7 +25,8 @@ const updateCurrency = async (queryReq, update) => {
         obj.details.price = Math.round(newPrice*100)/100
         return obj
     })
-    //added a boolean update option in order to make database changes
+
+    //makes changes to db
     if(update){
         Promise.all( updatedInv.map( async (obj) => {
             await Inventory.updateOne(
@@ -39,9 +36,7 @@ const updateCurrency = async (queryReq, update) => {
         }))
 
     }
-
     return updatedInv
-
 }
 
 //checks the input is valid

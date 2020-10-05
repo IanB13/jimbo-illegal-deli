@@ -9,6 +9,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
     "test-Jimbo": "cross-env NODE_ENV=test jest /testing/jimboReq.test.js --verbose --runInBand",
     "test-Bojim": "cross-env NODE_ENV=test jest bojimAttack --verbose --runInBand",
+    "test-tranSort": "cross-env NODE_ENV=test jest transactionSort.test.js --verbose --runInBand",
+    "test-distance": "cross-env NODE_ENV=test jest distance.test.js --verbose --runInBand",
     "lint": "eslint ."
   },
   "repository": {

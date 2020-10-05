@@ -7,7 +7,7 @@
         "name":"check out the code here:",
         "url":"https://github.com/IanB13/jimbo-illegal-deli"
       },
-      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base. \r\n In order to use the examples you must click 'Authorize' and provide a password"
+      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together the most trustworthy suppliers of black market items, such as ivory and irresponsibly-sourced caviar, and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base.\r\nIn order to run the examples you must click 'Authorize' and provide a password."
     },
     "basePath": "/",
     "securityDefinitions":{
@@ -47,7 +47,7 @@
          "get": {
             "tags": ["Customers"],
             "summary": "gets all customers",
-            "description": "Retrives an array of all Jimbo's Ilegal Deli's customers. All data is retrived except for the customer's password hash. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
+            "description": "Retrieves an array of all Jimbo's Ilegal Deli's customers. All data is retreived except for the customer's password hash. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId": "GET customers",
             "produces": [
               "application/json"
@@ -66,7 +66,7 @@
           "get":{
             "tags":["Customers"],
             "summary": "get an individual customer",
-            "description": "Retrives an individual Jimbo's Ilegal Deli customer. Only the customers first name, last name and email is retrived. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
+            "description": "Retrieves an individual Jimbo's Ilegal Deli customer. Only the customer's first name, last name and email is retrived. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"GET customers by id",
             "produces": [
               "application/json"
@@ -78,7 +78,7 @@
                 "description": "MongoDB ID to find customer by",
                 "required": true,
                 "type": "string",
-                "example": "5f75e6d1fc77d63950276a97"
+                "example": "5f7b1b6acade1629183f3fb1"
               }
             ],
             "responses": {
@@ -147,7 +147,7 @@
           "get":{
             "tags":["Inventory"],
             "summary":"gets all inventory items",
-            "description": "Retrives an array of all Jimbo's Ilegal Deli's inventory. All inventory data is retrived. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
+            "description": "Retrieves an array of all Jimbo's Ilegal Deli's inventory. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"GET inventory",
             "produces": [
               "application/json"
@@ -197,7 +197,7 @@
           "put":{
             "tags":["Inventory"],
             "summary":"processes a customer order",
-            "description":"Processes a customer order. Must include the customers UID. The order parameter is an array of objects. Object inside the order array works as {'item': quantity} .This endpoint is protected by a the customer's password and it must be provided in the Authorization header",
+            "description":"Processes a customer order. Must include the customer's UID. The order parameter is an object. The order object has the items to order as the object properties. The property value is an integer representing the quantity of the item. This endpoint is protected by a the customer's unique password and it must be provided in the Authorization header",
             "operationId":"PUT order",
             "produces": [
               "application/json"
@@ -228,7 +228,7 @@
           "put":{
             "tags":["Inventory"],
             "summary": "update items prices to selected currency",
-            "description":"Updates currency in database to provided code, if an item of id is provided it will only update the selected inv item. Id or item can be provided, not both.This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
+            "description":"Updates currency in database to provided code. If an item or id is provided, it will only update the selected inventory item. Id or item can be provided, but not both. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"PUT Currency",
             "produces": [
               "application/json"
@@ -259,7 +259,7 @@
           "get":{
             "tags":["Events"],
             "summary":"Gets all events in database",
-            "description":"Get all events in database. Events are created everytime a customer orders This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
+            "description":"Gets all events in database. Events are created every time a customer orders. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"get",
             "produces": [
               "application/json"
@@ -356,10 +356,7 @@
       "order": {
         "properties": {
           "order": {
-            "type": "array",
-            "items": {
               "type": "object"
-            }
           },
           "currency_code": {
             "type": "string"

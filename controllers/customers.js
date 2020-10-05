@@ -3,7 +3,6 @@ const Customer = require("../models/Customer")
 const distance = require("../utils/customers/distance")
 
 
-//TODO: maybe add  google maps to make bike and car data
 //calculates distance via helicopter
 customerRouter.get("/distance/", async (request, response) => {
     console.log(request.query)
