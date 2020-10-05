@@ -3,7 +3,11 @@
     "info": {
       "version": "0.0.1",
       "title": "Jimbo's Ilegal Deli",
-      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base. \r\n In order to use the examples you must Authorize and provide a password"
+      "contact":{
+        "name":"check out the code here:",
+        "url":"https://github.com/IanB13/jimbo-illegal-deli"
+      },
+      "description": "Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. JID has an exclusive inventory and a loyal customer base. \r\n In order to use the examples you must click 'Authorize' and provide a password"
     },
     "basePath": "/",
     "securityDefinitions":{
@@ -21,15 +25,15 @@
     "tags" : [
       {
       "name": "Customers", 
-      "description": "View customer information and get distances from customers" 
+      "description": "Everything about the deli's dubious customers" 
       },
       {
         "name": "Inventory",
-        "description":"View inventory and modify inventory currency and add inventory items"
+        "description":"From hand grenades to blue whales, the inventory has what you need"
       },
       {
         "name": "Events",
-        "description":"A log of events"
+        "description":"Sales events to keep up with the customers"
       }
     ],
     "consumes": [
@@ -42,7 +46,8 @@
       "/customers": {
          "get": {
             "tags": ["Customers"],
-            "description": "Gets all Customers",
+            "summary": "gets all customers",
+            "description": "Retrives an array of all Jimbo's Ilegal Deli's customers. All data is retrived except for the customer's password hash. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId": "GET customers",
             "produces": [
               "application/json"
@@ -60,7 +65,8 @@
       "/customers/{id}": {
           "get":{
             "tags":["Customers"],
-            "description":"Gets an individual customer based on MongoDB ID",
+            "summary": "get an individual customer",
+            "description": "Retrives an individual Jimbo's Ilegal Deli customer. Only the customers first name, last name and email is retrived. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"GET customers by id",
             "produces": [
               "application/json"
@@ -91,7 +97,8 @@
         "/customers/distance/": {
           "get":{
             "tags":["Customers"],
-            "description":"Gets distance between customer and inputed coordinate point via helicopter.",
+            "summary":"Gets distance between customer and inputed coordinate point via helicopter.",
+            "description": "Finds the distance from Jimbo's current location to a customer. All inputs must be provided in a query string. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"GET distance helicopter",
             "produces": [
               "application/json"
@@ -139,7 +146,8 @@
         "/inventory": {
           "get":{
             "tags":["Inventory"],
-            "description":"Gets all inventory items",
+            "summary":"gets all inventory items",
+            "description": "Retrives an array of all Jimbo's Ilegal Deli's inventory. All inventory data is retrived. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"GET inventory",
             "produces": [
               "application/json"
@@ -155,7 +163,8 @@
           },
           "post":{
             "tags":["Inventory"],
-            "description":"Adds a new Item to the Inventory",
+            "summary":"adds an item to the inventory",
+            "description":"Adds an item to Jimbo's Ilegal Deli's inventory. The item name must be unique. More fields are automatically created based on the provided country code. This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"post",
             "produces": [
               "application/json"
@@ -187,7 +196,8 @@
         "/inventory/order": {
           "put":{
             "tags":["Inventory"],
-            "description":"",
+            "summary":"processes a customer order",
+            "description":"Processes a customer order. Must include the customers UID. The order parameter is an array of objects. Object inside the order array works as {'item': quantity} .This endpoint is protected by a the customer's password and it must be provided in the Authorization header",
             "operationId":"PUT order",
             "produces": [
               "application/json"
@@ -217,7 +227,8 @@
         "/inventory/currency": {
           "put":{
             "tags":["Inventory"],
-            "description":"Updates currency in database to provided code, if an item of id is provided it will only update the selected inv item. Id or item can be provided, not both",
+            "summary": "update items prices to selected currency",
+            "description":"Updates currency in database to provided code, if an item of id is provided it will only update the selected inv item. Id or item can be provided, not both.This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"PUT Currency",
             "produces": [
               "application/json"
@@ -247,7 +258,8 @@
         "/events": {
           "get":{
             "tags":["Events"],
-            "description":"Get all events in database",
+            "summary":"Gets all events in database",
+            "description":"Get all events in database. Events are created everytime a customer orders This endpoint is protected by Jimbo's password and it must be provided in the Authorization header",
             "operationId":"get",
             "produces": [
               "application/json"
