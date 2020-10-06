@@ -15,12 +15,7 @@ const cron = require("node-cron")
 cron.schedule("0 1 * * 3", transactionSort) //For 1:00 am every Wednesday
 
 //for swagger api documentation
-//using subpath to avoid conflict
-const subpath = express()
-
-app.use("/v1", subpath)
 app.use(express.static("dist"))
-
 app.get("/",  (_request, response) => {
     response.sendFile(__dirname + "/dist/index.html")
 })
