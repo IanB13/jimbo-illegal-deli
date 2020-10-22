@@ -1,3 +1,8 @@
+## Overview
+ Jimbo's Illegal Deli is a ecommerce platform that allows users to buy and sell products.
+ It is written in node.js, tested with jest and documented with the Swagger API.
+ It is deployed with a docker container using github Actions at https://jimbo-ilegal-deli.herokuapp.com/
+
 # Jimbo's Illegal Deli
 
 Jimbo’s Illegal Deli (JID) is an online marketplace that brings together suppliers of black market items such as ivory and irresponsibly-sourced caviar and not-very-morally-good customers. You’ll find that JID has a limited inventory (20 items – `inventory.json`) and a small, but loyal customer base (5 customers – `deli_customer.json`). 
